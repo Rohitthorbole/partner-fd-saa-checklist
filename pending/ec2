@@ -1,0 +1,82 @@
+## AWS EC2 — Dedicated Instance & Dedicated Host
+
+### 1. Dedicated Instance
+
+**Meaning:** EC2 instance runs on **hardware dedicated to your AWS account**.
+
+```text
+Normal EC2:
+Physical Host
+├── Your EC2
+├── Other customer EC2
+└── Other customer EC2
+
+Dedicated Instance:
+Physical Host
+├── Your EC2
+└── Your EC2
+```
+
+**Use when:**
+
+* Physical hardware must be dedicated to your account.
+* Organizational/compliance requirements require hardware isolation.
+
+**Important:** It does **not automatically provide better performance, HA, or security** than normal EC2.
+
+---
+
+### 2. Dedicated Host
+
+**Meaning:** You get an **entire physical server dedicated to your AWS account**.
+
+```text
+Dedicated Host
+┌──────────────────────────┐
+│ Physical AWS Server      │
+│                          │
+│ EC2   EC2   EC2          │
+│                          │
+│ Entire host = your AWS account
+└──────────────────────────┘
+```
+
+**Use when:**
+
+* Software licensing is tied to **physical hardware**.
+* BYOL (**Bring Your Own License**) requirements.
+* License depends on **physical sockets/cores**.
+* You need visibility/control at the physical host level.
+
+---
+
+### Dedicated Instance vs Dedicated Host
+
+|                               | Dedicated Instance         | Dedicated Host    |
+| ----------------------------- | -------------------------- | ----------------- |
+| Dedicated physical hardware   | ✅                          | ✅                 |
+| Entire physical server        | ❌                          | ✅                 |
+| Allocate host first           | ❌                          | ✅                 |
+| Host-level control/visibility | Limited                    | ✅                 |
+| BYOL / physical licensing     | Limited/use-case dependent | ⭐ Common use case |
+| Normal application benefit    | Usually little             | Usually little    |
+
+### 🧠 SAA Exam Memory
+
+> **Dedicated Instance = Dedicated hardware**
+
+> **Dedicated Host = Entire physical server**
+
+> **Physical CPU/socket/server-based licensing → Think Dedicated Host**
+
+### Console
+
+**Dedicated Instance:**
+
+`EC2 → Launch Instance → Advanced details → Tenancy → Dedicated`
+
+**Dedicated Host:**
+
+`EC2 → Dedicated Hosts → Allocate Dedicated Host → Launch EC2 → Tenancy = Dedicated Host`
+
+**Don't confuse:** Dedicated ≠ automatically higher availability. For HA, think **multiple AZs + Auto Scaling / appropriate architecture**.
